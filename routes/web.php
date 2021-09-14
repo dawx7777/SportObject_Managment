@@ -32,7 +32,7 @@ Route::group(['prefix'=>'admin','middleware'=>['isAdmin','auth','PreventBackHist
     Route::get('dashboard',[AdminController::class,'index'])->name('admin.dashboard');
     Route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
     Route::get('settings',[AdminController::class,'settings'])->name('admin.settings');
-
+    Route::get('messages',[AdminController::class,'messages'])->name('admin.messages');
 
     Route::post('update-profile-info',[AdminController::class,'updateInfo'])->name('adminUpdateInfo');
     Route::post('change-password',[AdminController::class,'changePassword'])->name('adminChangePassword');
@@ -46,8 +46,9 @@ Route::group(['prefix'=>'user','middleware'=>['isUser','auth','PreventBackHistor
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
     Route::get('profile',[UserController::class,'profile'])->name('user.profile');
     Route::get('settings',[UserController::class,'settings'])->name('user.settings');
-
+    Route::get('messages',[UserController::class,'messages'])->name('user.messages');
 
     Route::post('update-profile-info',[UserController::class,'updateInfo'])->name('userUpdateInfo');
     Route::post('change-password',[UserController::class,'changePassword'])->name('userChangePassword');
+    
 });

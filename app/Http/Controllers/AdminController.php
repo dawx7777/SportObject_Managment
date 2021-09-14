@@ -25,6 +25,10 @@ class AdminController extends Controller
 
         return view ('dashboards.admins.profile');
     }
+    function messages(){
+
+        return view ('dashboards.admins.messages');
+    }
 
 
     function updateInfo(Request $request){

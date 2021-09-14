@@ -25,7 +25,10 @@ class UserController extends Controller
 
         return view ('dashboards.users.profile');
     }
+    function messages(){
 
+        return view ('dashboards.users.messages');
+    }
 
     function updateInfo(Request $request){
            

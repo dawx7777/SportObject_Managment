@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     
     <link rel="stylesheet" href="{{ asset('css/simple-sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/chat.css') }}">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -68,6 +69,9 @@
                 </li>
                 <li>
                     <a href="{{route('user.settings')}}">Settings</a>
+                </li>
+                <li>
+                    <a href="{{route('user.messages')}}">Wiadomości</a>
                 </li>
             </ul>
 
@@ -124,7 +128,7 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="dist/js/adminlte.min.js"></script>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"

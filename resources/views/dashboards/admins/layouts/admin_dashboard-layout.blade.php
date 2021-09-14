@@ -151,6 +151,15 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('admin.messages')}}" class="nav-link {{(request()->is('admin/messages*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                Messages
+                
+              </p>
+            </a>
+          </li>
           <br>
           <br>
           <li class="nav-item">
