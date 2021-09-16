@@ -103,9 +103,7 @@ li{
     font-size: 10px;
 }
 
-.active{
-    background: #eee;
-}
+
 input[type=text]{
     width: 100%;
     padding: 12px 20px;

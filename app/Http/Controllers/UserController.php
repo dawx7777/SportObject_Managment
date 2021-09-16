@@ -8,6 +8,7 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Controllers\Controller;
+use App\Models\Message;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,8 +27,33 @@ class UserController extends Controller
         return view ('dashboards.users.profile');
     }
     function messages(){
+        $users=User::where('id','!=',Auth::id())->get();
 
-        return view ('dashboards.users.messages');
+        return view ('dashboards.users.messages',['users' => $users]);
+    }
+
+    public function getMessage($user_id){
+       $my_id=Auth::id();
+       $messages= Message::where(function($query) use ($user_id, $my_id){
+           $query->where('from',$my_id)->where('to',$user_id);
+       })->orWhere(function($query) use ($user_id, $my_id){
+           $query->where('from',$user_id)->where('to',$my_id);
+       })->get();
+       return view ('dashboards.users.message',['messages' => $messages]);
+    }
+
+    public function postMessage(Request $request){
+
+        $from=Auth::id();
+        $to= $request->receiver_id;
+        $message= $request->message;
+
+        $data= new Message();
+        $data->from=$from;
+        $data->to=$to;
+        $data->messages=$message;
+        $data->is_read=0;
+        $data->save();
     }
 
     function updateInfo(Request $request){

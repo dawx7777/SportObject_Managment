@@ -47,7 +47,8 @@ Route::group(['prefix'=>'user','middleware'=>['isUser','auth','PreventBackHistor
     Route::get('profile',[UserController::class,'profile'])->name('user.profile');
     Route::get('settings',[UserController::class,'settings'])->name('user.settings');
     Route::get('messages',[UserController::class,'messages'])->name('user.messages');
-
+    Route::get('message/{id}',[UserController::class,'getMessage'])->name('user.message');
+    Route::post('message',[UserController::class,'postMessage']);
     Route::post('update-profile-info',[UserController::class,'updateInfo'])->name('userUpdateInfo');
     Route::post('change-password',[UserController::class,'changePassword'])->name('userChangePassword');
     
