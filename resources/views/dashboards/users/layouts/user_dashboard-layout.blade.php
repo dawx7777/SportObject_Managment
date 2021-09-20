@@ -73,6 +73,9 @@
                 <li>
                     <a href="{{route('user.messages')}}">Wiadomości</a>
                 </li>
+                <li>
+                    <a href="{{route('user.places')}}">Miejsca</a>
+                </li>
             </ul>
 
             <ul class="list-unstyled CTAs">
@@ -129,6 +132,7 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="dist/js/adminlte.min.js"></script>
+
     <script>
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
@@ -209,7 +213,7 @@ $.ajaxSetup({
   
   });
   </script>
-
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         var receiver_id='';
@@ -222,10 +226,39 @@ $.ajaxSetup({
      }
   });
 
+  Pusher.logToConsole = true;
+
+var pusher = new Pusher('12560bd7e0eb48c5024a', {
+  cluster: 'eu'
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+  //alert(JSON.stringify(data));
+
+  if(my_id == data.from){
+      $('#' + data.to).click();
+      
+  }else if(my_id==data.to){
+      if(receiver_id==data.from){
+          $('#' + data.from).click();
+      }else{
+          var pending=parseInt($('#' + data.from).find('pending').html());
+
+          if(pending){
+              $('#' + data.from).find('.pending').html(pending + 1);
+
+          }else{
+              $('#' + data.from).append('<span class="pending">1</span>');
+          }
+      }
+  }
+});
+
             $('.user').click(function (){
                 $('.user').removeClass('active');
                 $(this).addClass('active');
-
+                $(this).find('.pending').remove();
                 receiver_id=$(this).attr('id');
                 $.ajax({
                     type: "get",
@@ -234,6 +267,7 @@ $.ajaxSetup({
                     cache: false,
                     success: function (data){
                         $('#messages').html(data);
+                        scrollToBottomFunc();
                     }
                 });
             });
@@ -258,12 +292,18 @@ if(e.keyCode == 13 && message !='' && receiver_id !=''){
 
         },
         complete: function(){
-
+            scrollToBottomFunc();
         }
     })
 }
 });
-        });
+ });
+
+ function scrollToBottomFunc() {
+        $('.messages-wrapper').animate({
+            scrollTop: $('.messages-wrapper').get(0).scrollHeight
+        }, 50);
+    }
 
     </script>
 </body>

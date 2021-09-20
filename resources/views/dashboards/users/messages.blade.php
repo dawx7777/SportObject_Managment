@@ -25,11 +25,15 @@
                 <ul class="users">
                     @foreach($users as $user)
                     <li class="user" id="{{$user->id}}">
-                        <span class="pending">1</span>
+
+                    @if($user->unread)
+                                    <span class="pending">{{ $user->unread }}</span>
+                                @endif
+                        
 
                         <div class="media">
                             <div class="media-left">
-                                <img src="{{$user-> picture}}" alt="" class="media-object">
+                                <img src="http://127.0.0.1:8000/users/images/{{$user->picture}}" alt="" class="media-object">
                             </div>
                             <div class="media-body">
                                 <p class="name">{{$user->name}}</p>

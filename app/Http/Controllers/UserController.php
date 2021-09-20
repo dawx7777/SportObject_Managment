@@ -9,8 +9,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Pusher\Pusher;
 
 class UserController extends Controller
 {
@@ -27,13 +29,17 @@ class UserController extends Controller
         return view ('dashboards.users.profile');
     }
     function messages(){
-        $users=User::where('id','!=',Auth::id())->get();
-
+        //$users=User::where('id','!=',Auth::id())->get();
+        $users=DB::select("select users.id,users.name,users.picture, users.email, count(is_read) as unread from users left join messages on users.id= messages.from and is_read=0 and messages.to=".Auth::id() ."
+        where users.id != ". Auth::id() ."
+        group by users.id, users.name, users.picture, users.email");
         return view ('dashboards.users.messages',['users' => $users]);
     }
 
     public function getMessage($user_id){
        $my_id=Auth::id();
+
+       Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
        $messages= Message::where(function($query) use ($user_id, $my_id){
            $query->where('from',$my_id)->where('to',$user_id);
        })->orWhere(function($query) use ($user_id, $my_id){
@@ -54,6 +60,22 @@ class UserController extends Controller
         $data->messages=$message;
         $data->is_read=0;
         $data->save();
+
+        //pusher
+
+        $options=array(
+            'cluster' => 'eu',
+                'useTLS' => true
+        );
+
+        $pusher=new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+        $data= ['from' => $from, 'to' =>$to];
+        $pusher->trigger('my-channel','my-event',$data);
     }
 
     function updateInfo(Request $request){
