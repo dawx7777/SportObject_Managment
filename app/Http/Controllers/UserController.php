@@ -146,4 +146,8 @@ function changePassword(Request $request){
         }
     }
 }
+
+public function objects(){
+    return view ('dashboards.users.objects');
+}
 }

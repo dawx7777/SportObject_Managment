@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\ApiObjectController;
+use App\Http\Controllers\Api\ApiRestaurantController;
 use App\Http\Controllers\UserController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -46,6 +48,7 @@ Route::group(['prefix'=>'admin','middleware'=>['isAdmin','auth','PreventBackHist
 Route::group(['prefix'=>'user','middleware'=>['isUser','auth','PreventBackHistory']],function(){
 
     Route::get('dashboard',[UserController::class,'index'])->name('user.dashboard');
+    Route::get('objects',[UserController::class,'objects'])->name('user.objects');
     Route::get('profile',[UserController::class,'profile'])->name('user.profile');
     Route::get('settings',[UserController::class,'settings'])->name('user.settings');
     Route::get('messages',[UserController::class,'messages'])->name('user.messages');
@@ -55,3 +58,6 @@ Route::group(['prefix'=>'user','middleware'=>['isUser','auth','PreventBackHistor
     Route::post('change-password',[UserController::class,'changePassword'])->name('userChangePassword');
     
 });
+
+Route::get('/api/map-marker', 'Api\ApiObjectController@mapMarker');
+Route::get('/api/map-marker',[ApiObjectController::class,'mapMarker']);

@@ -22,7 +22,8 @@
   
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   
-
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1sDBZ-qgAvB2kKlcFX5eLZn_MvmJKd1M" async defer></script>
   
    
 </head>
@@ -74,7 +75,7 @@
                     <a href="{{route('user.messages')}}">Wiadomości</a>
                 </li>
                 <li>
-                    <a href="{{route('user.places')}}">Miejsca</a>
+                    <a href="{{route('user.objects')}}">Miejsca</a>
                 </li>
             </ul>
 
@@ -128,6 +129,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     
 <script src="plugins/jquery/jquery.min.js"></script>
+<script src="{{mix('js/app.js')}}"></script>
 
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
