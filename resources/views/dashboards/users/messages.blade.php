@@ -33,7 +33,7 @@
 
                         <div class="media">
                             <div class="media-left">
-                                <img src="http://127.0.0.1:8000/users/images/{{$user->picture}}" alt="" class="media-object">
+                                <img src="{{asset('/users/images/'. $user->picture)}}" alt="" class="media-object">
                             </div>
                             <div class="media-body">
                                 <p class="name">{{$user->name}}</p>

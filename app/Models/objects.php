@@ -13,9 +13,16 @@ class objects extends Model
         'city',
         'state',
         'hours',
+        'picture',
         'latitude',
-        'longitude'
+        'longitude',
+        'width',
+        'lenght',
+        'type',
+        'light',
+        'count'
         
 
     ];
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StatusNotification;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -9,10 +10,23 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Models\notifications;
+use App\Models\objects;
+use App\Models\reservations;
+use App\Models\teamgames;
+use App\Notifications\NewReservationNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 use Illuminate\Support\Facades\Validator;
 use Pusher\Pusher;
+use App\Notifications\BillingNotification;
+use Illuminate\Bus\Queueable;
+
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
 class UserController extends Controller
 {
@@ -20,14 +34,22 @@ class UserController extends Controller
 
         return view ('dashboards.users.index');
     }
-    function settings(){
+  
 
-        return view ('dashboards.users.settings');
+    function createteam(){
+
+        return view('dashboards.users.createteam');
     }
+    function showteams(){
+
+        return view('dashboards.users.createteam');
+    }
+
     function profile(){
 
         return view ('dashboards.users.profile');
     }
+  
     function messages(){
         //$users=User::where('id','!=',Auth::id())->get();
         $users=DB::select("select users.id,users.name,users.picture, users.email, count(is_read) as unread from users left join messages on users.id= messages.from and is_read=0 and messages.to=".Auth::id() ."
@@ -84,6 +106,8 @@ class UserController extends Controller
             'name'=>'required',
             'email'=> 'required|email|unique:users,email,'.Auth::user()->id,
             'adress'=>'required',
+            'imie'=>'required',
+            'nazwisko'=>'required',
             'phone'=>'required'
 
         ]);
@@ -94,6 +118,8 @@ class UserController extends Controller
              $query = User::find(Auth::user()->id)->update([
                   'name'=>$request->name,
                   'email'=>$request->email,
+                  'imie'=>$request->imie,
+                  'nazwisko'=>$request->nazwisko,
                   'adress'=>$request->adress,
                   'phone'=>$request->phone
              ]);
@@ -102,6 +128,7 @@ class UserController extends Controller
                  return response()->json(['status'=>0,'msg'=>'Coś poszło nie tak.']);
              }else{
                  return response()->json(['status'=>1,'msg'=>'Twój profil został zaktualizowany.']);
+                
              }
         }
 }
@@ -148,6 +175,35 @@ function changePassword(Request $request){
 }
 
 public function objects(){
-    return view ('dashboards.users.objects');
+
+
+    $objects=objects::all();
+    return view('dashboards.users.objects',["objects"=>$objects]);
+    
 }
+
+public function getObject($id){
+
+    $object=objects::find($id);
+    return view('dashboards.users.object',['object'=>$object]);
+
+
+}
+
+public function ajax(){
+
+    $filter=objects::all();
+    $type=$filter->sortBy('type')->pluck('type')->unique();
+
+    return view('dashboards.users.objects',compact('type'));
+}
+
+public function objectsindex(){
+
+
+    $objects=objects::all();
+    return view('dashboards.users.index',["objects"=>$objects]);
+    
+}
+
 }

@@ -16,20 +16,21 @@
     
     <link rel="stylesheet" href="{{ asset('css/simple-sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/chat.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1sDBZ-qgAvB2kKlcFX5eLZn_MvmJKd1M" async defer></script>
-  
-   
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <img class="wave" src="{{asset('images/wave.png')}}">
+    
     <div class="wrapper">
 
     
@@ -42,40 +43,64 @@
  
 <img src="{{Auth::user()-> picture}}" alt="Avatar" class="avatar">
         <div class="info">
-          <a href="#" class="d-block">{{Auth::user()->name}}</a>
+          <a href="{{route('user.profile')}}" class="d-block">{{Auth::user()->name}}</a>
         </div>
       </div>
       <hr id="hr">
             <ul class="list-unstyled components">
                 
                 <li>
-                    <a href="{{route('user.dashboard')}}">Dashboard</a>
+                <a href="{{route('user.dashboard')}}"><i class="fa fa-home fa-2x"></i>Strona Główna</a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-group fa-2x"></i>Zespoły</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="{{route('user.createteam')}}"><i class="	fa fa-plus fa-1x"></i>Stwórz zespół</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="{{route('user.showteams')}}"><i class="fa fa-eye fa-1x"></i>Wyświetl zespoły</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a href="{{route('user.yoursteam')}}"><i class="fa fa-eye fa-1x"></i>Twój zespół</a>
                         </li>
+                        <li>
+                            <a href="{{route('user.flashscore')}}"><i class="fa fa-globe fa-1x"></i>Wyniki spotkań</a>
+                        </li>
+                    
+                        
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-futbol-o fa-2x"></i>Gry</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu1">
+                        <li>
+                            <a href="{{route('user.games')}}"><i class="fa fa-eye fa-1x"></i>Wyświetl Gry</a>
+                        </li>
+                        <li>
+                            <a href="{{route('user.makegame')}}"><i class="fa fa-plus fa-1x"></i>Stwórz gre</a>
+                        </li>
+                        <li>
+                            <a href="{{route('user.showyourgame')}}"><i class="fa fa-floppy-o fa-1x"></i>Zapisane gry</a>
+                        </li>
+                        
                     </ul>
                 </li>
                 <li>
-                    <a href="{{route('user.profile')}}">Profile</a>
+                    <a href="{{route('user.profile')}}"><i class="fa fa-user fa-2x"></i>Profile</a>
                 </li>
                 <li>
-                    <a href="{{route('user.settings')}}">Settings</a>
+                    <a href="{{route('user.addreservations')}}"><i class="fa fa-calendar-plus-o  fa-2x"></i>Dodaj Rezerwacje</a>
                 </li>
                 <li>
-                    <a href="{{route('user.messages')}}">Wiadomości</a>
+                    <a href="{{route('user.myreservations')}}"><i class="fa fa-calendar-check-o  fa-2x"></i>Moje Rezerwacje</a>
                 </li>
                 <li>
-                    <a href="{{route('user.objects')}}">Miejsca</a>
+                    <a href="{{route('user.messages')}}"><i class="fa fa-commenting fa-2x"></i>Wiadomości</a>
+                </li>
+                <li>
+                    <a href="{{route('user.objects')}}"><i class="fa fa-map-marker fa-2x"></i>Obiekty</a>
                 </li>
             </ul>
 
@@ -99,7 +124,7 @@
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn">
-                        <i class="fas fa-align-left"></i>
+                        <i class="fa fa-align-left"></i>
                         <span>Menu</span>
                     </button>
                     
@@ -308,6 +333,9 @@ if(e.keyCode == 13 && message !='' && receiver_id !=''){
     }
 
     </script>
+
+
+
 </body>
 
 </html>

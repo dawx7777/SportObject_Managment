@@ -8,7 +8,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Profile</h1>
+              <h1>Profile</h1> 
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -36,8 +36,7 @@
   
                   <p class="text-muted text-center">Admin</p>
 
-                  <input type="file" name="admin_image" id="admin_image" style="opacity: 0;height:1px;display:none">
-                  <a href="javascript:void(0)" class="btn btn-primary btn-block" id="change_picture_btn"><b>Change picture</b></a>
+                
                   
                 </div>
                 
@@ -72,6 +71,20 @@
                           <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{ Auth::user()->email }}" name="email">
                             <span class="text-danger error-text email_error"></span>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputImie" class="col-sm-2 col-form-label">Imię</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputImie" placeholder="Imię" value="{{ Auth::user()->imie }}" name="imie">
+                            <span class="text-danger error-text imie_error"></span>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputNazwisko" class="col-sm-2 col-form-label">Nazwisko</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNazwisko" placeholder="Nazwisko" value="{{ Auth::user()->nazwisko }}" name="nazwisko">
+                            <span class="text-danger error-text nazwisko_error"></span>
                           </div>
                         </div>
                         <div class="form-group row">

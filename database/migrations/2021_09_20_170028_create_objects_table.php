@@ -20,8 +20,14 @@ class CreateObjectsTable extends Migration
             $table->string('city');
             $table->string('state');
             $table->string('hours');
+            $table->string('picture');
             $table->decimal('latitude',8,6);
             $table->decimal('longitude',9,6);
+            $table->string('width');
+            $table->string('lenght');
+            $table->enum('type',array('sztuczna','połsztuczna','trawiasta','tartan'));
+            $table->enum('light', array('halgoen','LED','brak'));
+            $table->enum('count', array('mniej', 'wiecej','7 vs 7', '6 vs 6', '5 vs 5'));
             $table->timestamps();
         });
     }

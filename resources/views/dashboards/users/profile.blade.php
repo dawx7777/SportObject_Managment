@@ -2,6 +2,7 @@
 @section('title','Aplikacja Orlik')
 
 @section('content')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -23,7 +24,7 @@
           <div class="row">
             <div class="col-md-3">
   
-             
+            @include('sweetalert::alert')
               <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
                   <div class="text-center">
@@ -35,7 +36,7 @@
                   <p class="text-muted text-center">Użytkownik</p>
 
                   <input type="file" name="admin_image" id="admin_image" style="opacity: 0;height:1px;display:none">
-                  <a href="javascript:void(0)" class="btn btn-primary btn-block" id="change_picture_btn" style="width: 230px;"><b>Zmień zdjęcie</b></a>
+                  
                   
                 </div>
                 
@@ -57,8 +58,9 @@
                   <div class="tab-content">
                     <div class="active tab-pane" id="personal_info">
                       <form  method="POST" action="{{ route('userUpdateInfo') }}" id="UserInfoForm">
+                        @csrf
                         <div class="form-group row">
-                          <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                          <label for="inputName" class="col-sm-4 col-form-label">Name</label>
                           <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputName" placeholder="Name" value="{{ Auth::user()->name }}" name="name">
 
@@ -66,21 +68,35 @@
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                          <label for="inputEmail" class="col-sm-4 col-form-label">Email</label>
                           <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{ Auth::user()->email }}" name="email">
                             <span class="text-danger error-text email_error"></span>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputName2" class="col-sm-2 col-form-label">Adres</label>
+                          <label for="inputImie" class="col-sm-4 col-form-label">Imie</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputImie" placeholder="Imię" value="{{ Auth::user()->imie }}" name="imie">
+                            <span class="text-danger error-text email_error"></span>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputNazwisko" class="col-sm-4 col-form-label">Nazwisko</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNazwisko" placeholder="Nazwisko" value="{{ Auth::user()->nazwisko }}" name="nazwisko">
+                            <span class="text-danger error-text email_error"></span>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputName2" class="col-sm-4 col-form-label">Adres</label>
                           <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputName2" placeholder="Adres" value="{{ Auth::user()->adress }}" name="adress">
                             <span class="text-danger error-text adress_error"></span>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputName2" class="col-sm-2 col-form-label">Telefon</label>
+                          <label for="inputName2" class="col-sm-4 col-form-label">Telefon</label>
                           <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputName2" placeholder="Telefon" value="{{ Auth::user()->phone }}" name="phone">
                             <span class="text-danger error-text phone_error"></span>
@@ -98,21 +114,21 @@
                         <form  action="{{route('userChangePassword')}}" method="POST" id="changePasswordUserForm" class="form-horizontal">
                         
                           <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Stare hasło</label>
+                            <label for="inputName" class="col-sm-4 col-form-label">Stare hasło</label>
                             <div class="col-sm-10">
                               <input type="password" class="form-control" id="inputName" placeholder="Wpisz obecne hasło" name="oldpassword">
                               <span class="text-danger error-text oldpassword_error"></span>
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label for="inputName2" class="col-sm-2 col-form-label">Nowe hasło</label>
+                            <label for="inputName2" class="col-sm-4 col-form-label">Nowe hasło</label>
                             <div class="col-sm-10">
                               <input type="password" class="form-control" id="newpassword" placeholder="Wpisz nowe hasło" name="newpassword">
                               <span class="text-danger error-text newpassword_error"></span>
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label for="inputName2" class="col-sm-2 col-form-label">Powtórz nowe hasło</label>
+                            <label for="inputName2" class="col-sm-4 col-form-label">Powtórz nowe hasło</label>
                             <div class="col-sm-10">
                               <input type="password" class="form-control" id="cnewpassword" placeholder="Powtórz nowe hasło" name="cnewpassword">
                               <span class="text-danger error-text cnewpassword_error"></span>

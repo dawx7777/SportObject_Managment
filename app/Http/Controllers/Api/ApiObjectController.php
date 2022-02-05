@@ -18,21 +18,31 @@ class ApiObjectController extends Controller
      */
     public function mapMarker()
     { 
-        $request=objects::all();
+        $objects=objects::all();
         $map_markes = array ();
-        foreach ($request as $key => $request) { 
+        foreach ($objects as $key => $object) { 
             $map_markes[] = (object)array(
-                'name' => $request->name,
-                'adress' => $request->adress,
-                'city' => $request->city,
-                'state' => $request->state,
-                'hours' => $request->hours,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
+                'id' => $object->id,
+                'name' => $object->name,
+                'adress' => $object->adress,
+                'city' => $object->city,
+                'state' => $object->state,
+                'hours' => $object->hours,
+                'picture'=>$object->picture,
+                'latitude' => $object->latitude,
+                'longitude' => $object->longitude,
+                'width' => $object->width,
+                'lenght' => $object->lenght,
+                'type' => $object->type,
+                'light' => $object->light,
+                'count' => $object->count,
             );
         }
         return response()->json($map_markes);
     }
+
+
+     
  
 
 }

@@ -17,6 +17,10 @@
   
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <link rel="stylesheet" href="{{ asset('css/chat-admin.css') }}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  
+ 
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -35,66 +39,100 @@
     
       
 
-      
+     
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+          @foreach($countunread as $count)
+          <span class="badge badge-warning navbar-badge" id="pending1">{{$count->unread}}</span>
+        
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
             
-            <div class="media">
-              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-          
+          Masz {{$count->unread}} nieodczytanych wiadomości
           </a>
+        
+        
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            
-           
-           
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            
-           
-          
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <a href="{{route('admin.messages')}}" class="dropdown-item dropdown-footer">Zobacz wszystkie</a>
         </div>
+        @endforeach
       </li>
-      
+      @if(Auth::user())
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <i class="far fa-bell-slash"></i>
+          <span class="badge badge-danger navbar-badge">{{auth()->user()->unreadNotifications->count() }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-header">15 Notifications</span>
+          <span class="dropdown-header"></span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-         
+          @if(auth()->user()->unreadNotifications->count() )
+          @foreach(auth()->user()->unreadNotifications as $notification)
+          <div class="alert alert-danger" role="alert" style="height:67px; font-size:10px; margin-top:-15px;">
+
+          Rezerwacja: {{$notification->data['reservation']['title']}},{{$notification->data['reservation']['start']}}
           
+          <form method="POST" action="{{route('markNotification',$notification->id)}}">
+            @csrf
+          <button type="submit" class="btn btn-danger">
+              <i class="fa fa-trash" ></i>
+          </button>
+          </form>
+          
+            
+                
+        </div>
+      
          
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          @endforeach
+          <form method="POST" action="{{route('markAllNotification')}}">
+            @csrf
+          <button type="submit" class="btn btn-danger">
+              View all
+          </button>
+          </form>
+          @else
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> Brak powiadomień
+            
+          </a>
+          @endif
+         
+        
         </div>
       </li>
+      @endif
+
+      <div class="container-fluid">
+        
+
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown dropdown-notifications">
+              <a href="#notifications-panel" style="color:gray;" data-toggle="dropdown">
+                <i data-count="0" class="far fa-bell notification-icon"></i><span class="notif-count badge-warning navbar-badge ">0</span>
+              </a>
+              
+              <div class="dropdown-container">
+                <div class="dropdown-toolbar">
+                  
+                  
+                </div>
+                <ul class="dropdown-menu">
+                </ul>
+                <div class="dropdown-footer text-center">
+                  <a href="#">View All</a>
+                </div>
+              </div>
+            </li>
+           
+          </ul>
+        </div>
+      </div>
+    
       
-     
     </ul>
   </nav>
   
@@ -103,7 +141,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     
     <a href="{{\URL::to('/') }}" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      
       <span class="brand-text font-weight-light">Panel Admin</span>
     </a>
 
@@ -129,7 +167,7 @@
             <a href="{{route('admin.dashboard')}}" class="nav-link {{(request()->is('admin/dashboard*')) ? 'active' : ''}}">
               <i class="nav-icon fas fa-home"></i>
               <p>
-                Dashboard
+                Strona Główna
                 
               </p>
             </a>
@@ -138,25 +176,88 @@
             <a href="{{route('admin.profile')}}" class="nav-link {{(request()->is('admin/profile*')) ? 'active' : ''}}">
               <i class="nav-icon fas fa-user"></i>
               <p>
-               Profil
+               Profile
                 
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.settings')}}" class="nav-link {{(request()->is('admin/settings*')) ? 'active' : ''}}">
-              <i class="nav-icon fas fa-cog"></i>
+            <a href="{{route('admin.listusers')}}" class="nav-link {{(request()->is('admin/listusers*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-users"></i>
               <p>
-                Ustawienia
+               Użytkownicy
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.allreservations')}}" class="nav-link {{(request()->is('admin/allreservations*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-calendar"></i>
+              <p>
+                Rezerwacje
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.addreservations')}}" class="nav-link {{(request()->is('admin/addreservations*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-calendar-plus"></i>
+              <p>
+                Dodaj Rezerwacje
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.raports')}}" class="nav-link {{(request()->is('admin/raports*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-list"></i>
+              <p>
+                Raporty
                 
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('admin.messages')}}" class="nav-link {{(request()->is('admin/messages*')) ? 'active' : ''}}">
-              <i class="nav-icon fas fa-cog"></i>
+              <i class="nav-icon fas fa-info"></i>
               <p>
-                Messages
+                Wiadomości
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.objects')}}" class="nav-link {{(request()->is('admin/objects*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-map-marker"></i>
+              <p>
+               Obiekty
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.games')}}" class="nav-link {{(request()->is('admin/games*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-futbol"></i>
+              <p>
+               Gry
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.teams')}}" class="nav-link {{(request()->is('admin/teams*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+               Zespoły
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.flashscore')}}" class="nav-link {{(request()->is('admin/flashscore*')) ? 'active' : ''}}">
+              <i class="nav-icon fas fa-globe"></i>
+              <p>
+               Wyniki
                 
               </p>
             </a>
@@ -167,7 +268,7 @@
           <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                     <i class="nav-icon fas fa-sign-out-alt">   {{ __('Logout') }} </i>
+                                     <i class="nav-icon fas fa-sign-out-alt">   {{ __('Wyloguj') }} </i>
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -200,14 +301,7 @@
     </div>
   </aside>
  
-  <footer class="main-footer">
-   
-    <div class="float-right d-none d-sm-inline">
-      Praca Inżynierska
-    </div>
-    
-    <strong>Copyright &copy; 2021 </strong> Dawid Zawiślan
-  </footer>
+
 </div>
 
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -302,7 +396,7 @@ var pusher = new Pusher('12560bd7e0eb48c5024a', {
 
 var channel = pusher.subscribe('my-channel');
 channel.bind('my-event', function(data) {
-  //alert(JSON.stringify(data));
+ 
 
   if(my_id == data.from){
       $('#' + data.to).click();
@@ -311,7 +405,7 @@ channel.bind('my-event', function(data) {
       if(receiver_id==data.from){
           $('#' + data.from).click();
       }else{
-          var pending=parseInt($('#' + data.from).find('pending').html());
+          var pending=parseInt($('#' + data.from).find('.pending').html());
 
           if(pending){
               $('#' + data.from).find('.pending').html(pending + 1);
@@ -373,6 +467,54 @@ if(e.keyCode == 13 && message !='' && receiver_id !=''){
         }, 50);
     }
 
+
+  
     </script>
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script>
+  var notificationsWrapper   = $('.dropdown-notifications');
+      var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+      var notificationsCountElem = notificationsToggle.find('i[data-count]');
+      var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+      var notifications          = notificationsWrapper.find('ul.dropdown-menu');
+
+      if (notificationsCount <= 0) {
+        notificationsWrapper.hide();
+      }
+      var pusher = new Pusher('12560bd7e0eb48c5024a', {
+        cluster: 'eu', 
+      
+      
+      });
+      var channel = pusher.subscribe('posts');
+      channel.bind('App\\Events\\StatusNotification', function(data) {
+        var existingNotifications = notifications.html();
+        var newNotificationHtml = `
+          <li class="notification active">
+              <div class="media">
+                <div class="media-left">
+            
+                </div>
+                <div class="media-body">
+                  <strong class="notification-title">`+data.title+`</strong>
+                  <strong class="notification-title">`+data.start+`</strong>
+                  <!--p class="notification-desc">Extra description can go here</p-->
+                  <div class="notification-meta">
+                    <small class="timestamp">about a minute ago</small>
+                  </div>
+                </div>
+              </div>
+          </li>
+        `;
+        notifications.html(newNotificationHtml + existingNotifications);
+
+        notificationsCount += 1;
+        notificationsCountElem.attr('data-count', notificationsCount);
+        notificationsWrapper.find('.notif-count').text(notificationsCount);
+        notificationsWrapper.show();
+      });
+     </script>
+
 </body>
 </html>

@@ -1,0 +1,126 @@
+.image-sport {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 400px;
+  margin-right: 40px;
+ 
+  
+}
+  
+  ul {
+    padding-left: 0;
+    margin-bottom: 0; }
+  
+  a:hover {
+    text-decoration: none; }
+  
+  :focus {
+    outline: none; }
+  
+    .wrapper {
+        min-height: 50vh;
+        width: 600px;
+        margin-top: 30px;
+        background-repeat: no-repeat;
+       
+        align-items: center; }
+       
+  
+  .inner  {
+    min-width: 850px;
+    margin: auto;
+    padding-top: 68px;
+    padding-bottom: 48px;
+   }
+    .inner h3 {
+      text-transform: uppercase;
+      font-size: 22px;
+      font-family: "Muli-Bold";
+      text-align: center;
+      margin-bottom: 32px;
+      color: #333;
+      letter-spacing: 2px; }
+  
+  form {
+    width: 50%;
+    padding-left: 45px; 
+
+   
+  }
+  
+ 
+  
+  .form-wrapper {
+    margin-bottom: 17px;
+    text-align: center;
+   }
+    .form-wrapper label {
+      margin-bottom: 9px;
+      display: block; }
+  
+  .form-control {
+    border: 3px solid #3a3768;
+    display: block;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 20px;
+    font-family: "Muli-Bold";
+    background: none; }
+    .form-control:focus {
+      border: 3px solid #ae3c33; }
+  
+  select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    padding-left: 20px; }
+    select option[value=""][disabled] {
+      display: none; }
+     input[type='checkbox'] {
+        border: 1px solid #ae3c33;
+        position: relative;
+        cursor: pointer;
+     }
+      input[type=checkbox]:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 0;
+        left: 0;
+        border: 2px solid #555555;
+        border-radius: 3px;
+        background-color: white;
+}
+ input[type=checkbox]:checked:after {
+        content: "";
+        display: block;
+        width: 5px;
+        height: 10px;
+        border: solid black;
+        border-width: 0 2px 2px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        position: absolute;
+        top: 2px;
+        left: 6px;
+}
+img{
+
+ 
+}
+.form-group{
+
+  align-items: center;
+  position:static;
+
+}

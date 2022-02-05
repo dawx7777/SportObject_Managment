@@ -1,0 +1,75 @@
+
+.text-primary{
+
+    color: white;
+}
+
+
+.fc-time{
+
+    color:white;
+    font-size:15px;
+    text-align: center;
+}
+.text-center {
+    color:#3a3768;
+    font-weight: 600;
+    font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.fc-center{
+    color:white;
+    font-weight: 800;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+span{
+    color: white !important;;
+}
+
+.fc-day{
+    background-color: #3a3768!important;
+}
+#calendar
+{
+
+background-color: #3a3768;
+}
+table{
+    border: 10px solid #272544;
+}
+.fc-widget-content{
+    border: 1px solid #272544 !important ;
+   
+}
+tr{
+    border: 1px solid #8e8bbd !important;
+}
+.fc-title{
+    color: white!important;
+    
+    font-size:25px;
+    text-align: center;
+}
+.fc-axis{
+
+    background-color: #3a3768 !important;
+    
+    
+}
+.fc-widget-content{
+    background-color: white;
+}
+
+.fc-bg{
+   
+    background-color: red!important;
+}
+.fc-content{
+    font-size: 20px;
+}
+
+.fc-day-header{
+
+    background-color: #3a3768;
+}
